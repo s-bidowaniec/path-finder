@@ -1,0 +1,24 @@
+@import "variables";
+body {
+  background-color: black;
+  margin: 0;
+  font-family: $main-font;
+}
+
+#upper-wrapper{
+  height: 50vh;
+  background-image: url('../images/background.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+#lower-wrapper{
+  position: relative;
+  height: 50vh;
+}
+.container {
+  margin: auto;
+  max-width: 800px;
+}
