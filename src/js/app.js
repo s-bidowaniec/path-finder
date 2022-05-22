@@ -1,4 +1,5 @@
 import { select, classNames } from './settings.js';
+import Pathfinder from './components/pathfinder.js';
 
 const app = {
   getDomElements: function() {
@@ -55,6 +56,7 @@ const app = {
     thisApp.getDomElements();
     thisApp.initLinks();
     thisApp.initPages();
+    thisApp.pathfinder = new Pathfinder();
   }
 };
 

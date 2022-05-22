@@ -1,11 +1,14 @@
 export const select = {
+  template: {
+    tableId: 'tableTemplate'
+  },
   containerOf: {
     pagesId: 'pages',
     aboutId: 'about',
     finderId: 'pathfinder'
   },
   pathfinder: {
-    title: '.title',
+    title: '.title h4',
     array: 'table',
     button: 'button'
   },
@@ -26,5 +29,13 @@ export const classNames = {
     start: 'start',
     end: 'end',
     optimal: 'optimal'
+  }
+};
+
+export const states = {
+  pathfinder: {
+    draw: 'draw',
+    startEnd: 'start_end',
+    path: 'path'
   }
 };
