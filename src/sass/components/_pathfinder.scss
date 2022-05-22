@@ -1,6 +1,12 @@
+@import "../variables";
+
 #pathfinder{
   display: block;
   color: white;
+
+  .pathfinder-wrapper{
+    height: 140px;
+  }
 
   .title{
     position: absolute;
@@ -25,14 +31,25 @@
       height: 20px;
 
       &:hover{
-        background: gray;
+        background: $selection-color;
         opacity: 0.5;
       }
 
       &.selected{
-        background: orange;
+        background: $selection-color;
       }
-
     }
+  }
+
+  button {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: $selection-color;
+    color: $main-light-color;
+    padding: 4px;
+    width: 100px;
+    font-size: xx-small;
+    font-weight: bold;
   }
 }

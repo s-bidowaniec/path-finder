@@ -7,20 +7,29 @@ body {
 }
 
 #upper-wrapper{
-  height: 50vh;
+  height: 400px;
   background-image: url('../images/background.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+
+  #transition-black{
+    width: 100%;
+    height: 114px;
+    position: absolute;
+    top: 100%;
+    transform: translate(0, -100%);
+    background: linear-gradient(to top, black, transparent);
+  }
 }
 
 #lower-wrapper{
   position: relative;
-  height: 50vh;
+  height: 400px;
 }
 
 .container {
-  margin: auto;
+  margin: 0 auto;
   max-width: 800px;
 }

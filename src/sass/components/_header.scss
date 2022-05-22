@@ -1,10 +1,12 @@
+@import "../variables";
+
 header nav{
   display: flex;
   justify-content: center;
 
   a {
     margin: 30px 20px;
-    color: white;
+    color: $second-light-color;
     font-size: large;
     text-align: center;
     text-decoration: none;
