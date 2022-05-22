@@ -1,28 +1,28 @@
 @import "../variables";
 
-#pathfinder{
+#pathfinder {
   display: block;
   color: white;
 
-  .pathfinder-wrapper{
+  .pathfinder-wrapper {
     height: 140px;
   }
 
-  .title{
+  .title {
     position: absolute;
     left: 50%;
     top: -50%;
     transform: translate(-50%);
   }
 
-  table{
+  table {
     position: relative;
     left: 50%;
     transform: translate(-50%, -50%);
     border-spacing: 0;
     border-collapse: collapse;
 
-    td{
+    td {
       cursor: pointer;
       margin: 0;
       padding: 0;
@@ -30,13 +30,25 @@
       width: 20px;
       height: 20px;
 
-      &:hover{
+      &:hover {
         background: $selection-color;
         opacity: 0.5;
       }
 
-      &.selected{
+      &.selected {
         background: $selection-color;
+      }
+
+      &.start {
+        background: $start-color;
+      }
+
+      &.end {
+        background: $end-color;
+      }
+
+      &.optimal {
+        background: $optimal-route;
       }
     }
   }
