@@ -166,7 +166,7 @@ class Pathfinder {
       }
     };
     move([], thisPathfinder.start[0], thisPathfinder.start[1]);
-    console.log(possiblePaths);
+    console.log('posible: ', possiblePaths);
     // TO DO find optimal path
     // TO DO change array values for optimal path
   };
