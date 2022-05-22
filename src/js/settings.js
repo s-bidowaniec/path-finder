@@ -1,30 +1,30 @@
 export const select = {
   containerOf: {
-    pages: '#pages',
-    about: '#about',
-    finder: '#pathfinder',
+    pagesId: 'pages',
+    aboutId: 'about',
+    finderId: 'pathfinder'
   },
   pathfinder: {
     title: '.title',
     array: 'table',
-    button: 'button',
+    button: 'button'
   },
   nav: {
-    links: 'nav a',
-  },
+    links: 'nav a'
+  }
 };
 
 export const classNames = {
   pages: {
-    active: 'active',
+    active: 'active'
   },
   nav: {
-    active: 'active',
+    active: 'active'
   },
   finderArray: {
     selected: 'selected',
     start: 'start',
     end: 'end',
-    optimal: 'optimal',
-  },
+    optimal: 'optimal'
+  }
 };
