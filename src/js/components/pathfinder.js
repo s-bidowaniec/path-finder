@@ -138,6 +138,8 @@ class Pathfinder {
     } else if (thisPathfinder.state === states.pathfinder.path) {
       // restart array
       thisPathfinder.createArray();
+      thisPathfinder.start = false;
+      thisPathfinder.end = false;
       thisPathfinder.state = states.pathfinder.draw;
       thisPathfinder.dom.button.innerHTML = 'FINISH DRAWING';
       thisPathfinder.dom.title.innerHTML = 'DRAW ROUTES';
@@ -152,15 +154,17 @@ class Pathfinder {
     const move = (positions, row, column) => {
       console.log('row', row);
       console.log('col', column);
+      positions.push({ r: row, c: column });
 
       if (thisPathfinder.array[row][column] === 3) {
         possiblePaths.push(positions);
       }
       for (let direction of directions) {
-        if (thisPathfinder.array[row + direction[0]][column + direction[1]] > 0) {
+        const in_array = row + direction[0] >= 0 && row + direction[0] <= 9 && column + direction[1] >= 0 && column + direction[1] <= 9;
+        const is_on_path = in_array ? thisPathfinder.array[row + direction[0]][column + direction[1]] > 0 : false;
+        if (is_on_path) {
           if (!positions.some(p => p.r === row + direction[0] && p.c === column + direction[1])) {
-            positions.push({ r: row, c: column });
-            move(positions, row + direction[0], column + direction[1]);
+            move([...positions], row + direction[0], column + direction[1]);
           }
         }
       }
@@ -168,8 +172,25 @@ class Pathfinder {
     move([], thisPathfinder.start[0], thisPathfinder.start[1]);
     console.log('posible: ', possiblePaths);
     // TO DO find optimal path
+    thisPathfinder.optimalPath = possiblePaths.reduce((path1, path2) => path1.length < path2.length ? path1 : path2);
+    console.log('optimal: ', thisPathfinder.optimalPath);
     // TO DO change array values for optimal path
+    thisPathfinder.colorOptimalPath();
   };
+
+  colorOptimalPath() {
+    const thisPathfinder = this;
+
+    for (let position of thisPathfinder.optimalPath) {
+      const row = String(position.r);
+      const col = String(position.c);
+
+      const rowDom = thisPathfinder.dom.table.querySelector('[data-row="' + row + '"]');
+      const cellDom = rowDom.querySelector('[data-col="' + col + '"]');
+      cellDom.classList.add(classNames.finderArray.optimal);
+    }
+  };
+
 }
 
 export default Pathfinder;
