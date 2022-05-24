@@ -83,6 +83,7 @@ class Pathfinder {
           event.target.classList.remove(classNames.finderArray.selected);
         } else {
           console.log('non match');
+          //  TO DO silent alert
         }
       }
     }
@@ -122,21 +123,29 @@ class Pathfinder {
 
     console.log('button');
     if (thisPathfinder.state === states.pathfinder.draw) {
-      // TO DO if paths drawed
-      thisPathfinder.state = states.pathfinder.startEnd;
-      thisPathfinder.dom.button.innerHTML = 'COMPUTE';
-      thisPathfinder.dom.title.innerHTML = 'SELECT START POINT';
-      // else print message draw paths
+      if (thisPathfinder.array.reduce((sum, row) => sum + row.reduce((cell1, cell2) => cell1 + cell2), 0) > 1) {
+        thisPathfinder.state = states.pathfinder.startEnd;
+        thisPathfinder.dom.button.innerHTML = 'COMPUTE';
+        thisPathfinder.dom.title.innerHTML = 'SELECT START POINT';
+      } else {
+        console.log('no path');
+      }
     } else if (thisPathfinder.state === states.pathfinder.startEnd) {
       // TO DO if start and end point selected
-      // call calculate path function
-      thisPathfinder.computePath();
-      thisPathfinder.state = states.pathfinder.path;
-      thisPathfinder.dom.button.innerHTML = 'START AGAIN';
-      thisPathfinder.dom.title.innerHTML = 'THE BEST ROUTE IS...';
+      if (thisPathfinder.start && thisPathfinder.end) {
+        thisPathfinder.computePath();
+        thisPathfinder.state = states.pathfinder.path;
+        thisPathfinder.dom.button.innerHTML = 'START AGAIN';
+        thisPathfinder.dom.title.innerHTML = 'THE BEST ROUTE IS...';
+      } else if (thisPathfinder.start) {
+        console.log('there is no end');
+      } else if (thisPathfinder.end) {
+        console.log('there is no start');
+      } else {
+        console.log('there is nothing');
+      }
       // else print message draw paths
     } else if (thisPathfinder.state === states.pathfinder.path) {
-      // restart array
       thisPathfinder.createArray();
       thisPathfinder.start = false;
       thisPathfinder.end = false;
