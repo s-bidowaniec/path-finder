@@ -160,30 +160,47 @@ class Pathfinder {
 
     const possiblePaths = [];
     const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    let currentLength = false;
+    // distance + 1 because path include start and end point (distance of one cell = two cells path)
+    const distance = Math.abs(thisPathfinder.start[0] - thisPathfinder.end[0]) + Math.abs(thisPathfinder.start[1] - thisPathfinder.end[1]) + 1;
     const move = (positions, row, column) => {
-      console.log('row', row);
-      console.log('col', column);
       positions.push({ r: row, c: column });
-
+      // if current position reach end value add positions to possible paths (only if its shorter then previous ones
       if (thisPathfinder.array[row][column] === 3) {
-        possiblePaths.push(positions);
+        if (!currentLength || positions.length < currentLength) {
+          possiblePaths.push(positions);
+          currentLength = positions.length;
+          // if path length is equal to shortest possible distance, break search
+          if (currentLength === distance) {
+            return true;
+          }
+        }
       }
-      for (let direction of directions) {
-        const in_array = row + direction[0] >= 0 && row + direction[0] <= 9 && column + direction[1] >= 0 && column + direction[1] <= 9;
-        const is_on_path = in_array ? thisPathfinder.array[row + direction[0]][column + direction[1]] > 0 : false;
-        if (is_on_path) {
-          if (!positions.some(p => p.r === row + direction[0] && p.c === column + direction[1])) {
-            move([...positions], row + direction[0], column + direction[1]);
+      // continue only if current positions are shorter than current shortest way found
+      if (!currentLength || positions.length < currentLength) {
+        // sort directions -> prefer the ones that shorten the distance to end point
+        const dirs = directions.sort((a, b) => {
+          const distanceA = Math.abs(row + a[0] - thisPathfinder.end[0]) + Math.abs(column + a[1] - thisPathfinder.end[1]);
+          const distanceB = Math.abs(row + b[0] - thisPathfinder.end[0]) + Math.abs(column + b[1] - thisPathfinder.end[1]);
+          return distanceA - distanceB;
+        });
+        // recursive call for each possible move
+        for (let direction of dirs) {
+          const in_array = row + direction[0] >= 0 && row + direction[0] <= 9 && column + direction[1] >= 0 && column + direction[1] <= 9;
+          const is_on_path = in_array ? thisPathfinder.array[row + direction[0]][column + direction[1]] > 0 : false;
+          if (is_on_path) {
+            if (!positions.some(p => p.r === row + direction[0] && p.c === column + direction[1])) {
+              move([...positions], row + direction[0], column + direction[1]);
+            }
           }
         }
       }
     };
+
     move([], thisPathfinder.start[0], thisPathfinder.start[1]);
     console.log('posible: ', possiblePaths);
-    // TO DO find optimal path
     thisPathfinder.optimalPath = possiblePaths.reduce((path1, path2) => path1.length < path2.length ? path1 : path2);
     console.log('optimal: ', thisPathfinder.optimalPath);
-    // TO DO change array values for optimal path
     thisPathfinder.colorOptimalPath();
   };
 
