@@ -1,4 +1,89 @@
 #about {
   color: white;
   position: absolute;
+  top: -300px;
+}
+
+.label {
+  p {
+    font-size: x-large;
+    margin: 0;
+  }
+
+  h4 {
+    margin: 0;
+    font-weight: bold;
+    font-size: xx-large;
+  }
+}
+
+.row-navajo {
+  display: flex;
+  //width: 100vw;
+}
+
+.navajo {
+  position: relative;
+  margin-left: 150px;
+  max-width: 780px;
+  min-height: 525px;
+  flex-grow: 100;
+  background-image: url('../../images/1.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 140px;
+
+  .label {
+    position: relative;
+    width: 600px;
+    top: 65%;
+    left: 75%;
+
+  }
+}
+
+.row-highway {
+  display: flex;
+  width: 99vw;
+  flex-direction: row-reverse;
+}
+
+.highway {
+  float: right;
+  position: relative;
+  margin-left: 150px;
+  margin-right: 150px;
+  max-width: 1240px;
+  min-height: 645px;
+  flex-grow: 100;
+
+  background-image: url('../../images/2.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 2;
+
+  .label {
+    position: relative;
+    top: 25%;
+    left: -25%;
+    z-index: 3;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .navajo, .highway {
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .navajo {
+    min-height: 525px;
+  }
+
+  .highway {
+    min-height: 405px;
+  }
 }

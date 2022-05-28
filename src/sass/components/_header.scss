@@ -1,13 +1,13 @@
 @import "../variables";
 
-header nav{
+header nav {
   display: flex;
   justify-content: center;
 
   a {
-    margin: 30px 20px;
+    margin: 60px 40px;
     color: $second-light-color;
-    font-size: large;
+    font-size: xx-large;
     text-align: center;
     text-decoration: none;
   }
