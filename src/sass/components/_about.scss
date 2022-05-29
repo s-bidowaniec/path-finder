@@ -1,89 +1,120 @@
 #about {
   color: white;
-  position: absolute;
-  top: -300px;
+  position: relative;
 }
 
 .label {
   p {
     font-size: x-large;
     margin: 0;
+    letter-spacing: 0.25em;
   }
 
   h4 {
     margin: 0;
     font-weight: bold;
     font-size: xx-large;
+    letter-spacing: 0.25em;
   }
 }
 
 .row-navajo {
+  //border: solid 1px white;
   display: flex;
-  //width: 100vw;
+  position: relative;
 }
 
 .navajo {
-  position: relative;
   margin-left: 150px;
-  max-width: 780px;
-  min-height: 525px;
   flex-grow: 100;
-  background-image: url('../../images/1.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   margin-bottom: 140px;
 
-  .label {
-    position: relative;
-    width: 600px;
-    top: 65%;
-    left: 75%;
+  img {
+    width: 780px;
+    max-width: 100%;
+  }
+}
 
+.row-navajo-right {
+  //border: solid 1px red;
+  display: flex;
+  position: absolute;
+  height: 100%;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  .label {
+    //border: solid 1px blue;
+    position: relative;
+    top: 50%;
+    height: 50%;
+    margin-right: 150px;
   }
 }
 
 .row-highway {
+  //border: solid 1px white;
   display: flex;
-  width: 99vw;
+  position: relative;
   flex-direction: row-reverse;
 }
 
 .highway {
+  //border: solid 1px white;
   float: right;
-  position: relative;
   margin-left: 150px;
   margin-right: 150px;
-  max-width: 1240px;
-  min-height: 645px;
-  flex-grow: 100;
 
-  background-image: url('../../images/2.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: 2;
+
+  img {
+    width: 1240px;
+    max-width: 100%;
+    z-index: 2;
+  }
+
+
+}
+
+.row-highway-left {
+  //border: solid 1px red;
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
 
   .label {
+    //border: dashed 1px blue;
     position: relative;
     top: 25%;
-    left: -25%;
+    left: 10%;
+    height: 30%;
     z-index: 3;
   }
 }
 
 @media screen and (max-width: 1080px) {
   .navajo, .highway {
-    max-width: 780px;
+    //max-width: 780px;
     margin-left: auto;
     margin-right: auto;
   }
 
+  .row-navajo-right {
+    .label {
+      margin-right: 0;
+    }
+  }
+
   .navajo {
-    min-height: 525px;
+    margin-bottom: 10px;
   }
 
   .highway {
-    min-height: 405px;
+    //min-height: 405px;
   }
 }
