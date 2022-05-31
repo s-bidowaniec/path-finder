@@ -4,6 +4,8 @@
 }
 
 .label {
+  padding: 15px;
+
   p {
     font-size: x-large;
     margin: 0;
@@ -96,7 +98,7 @@
 
   .row-navajo-right {
     .label {
-      margin-right: 0;
+      margin: 0;
     }
   }
 
@@ -106,8 +108,19 @@
 }
 
 @media screen and (max-width: 720px) {
+  .row-highway-left {
+    .label {
+      left: 0%;
+    }
+  }
+
+
   .label {
+    //position: relative;
+    //left: 0;
+
     p {
+      max-width: 500px;
       font-size: large;
       margin: 0;
       letter-spacing: 0.25em;
