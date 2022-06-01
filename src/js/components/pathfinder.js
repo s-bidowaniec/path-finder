@@ -159,7 +159,7 @@ class Pathfinder {
     const thisPathfinder = this;
 
     const possiblePaths = [];
-    const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    const directions = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, 1], [1, 1], [1, -1], [1, 1]];
     let currentLength = false;
     // distance + 1 because path include start and end point (distance of one cell = two cells path)
     const distance = Math.abs(thisPathfinder.start[0] - thisPathfinder.end[0]) + Math.abs(thisPathfinder.start[1] - thisPathfinder.end[1]) + 1;
