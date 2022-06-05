@@ -55,7 +55,12 @@
         </div>
       </section>
       <section id="pathfinder" class="page">
-        <div class="alert-box">
+        <div class="alert-box"></div>
+        <div id="summary-background">
+          <div id="summary-popup">
+            <div class="close-btn">X</div>
+            <div class="info-box"></div>
+          </div>
         </div>
         <div class="title"><h4>DRAW ROUTES</h4></div>
         <div class="pathfinder-wrapper container">
@@ -87,6 +92,13 @@
     </tr>
   {{/each}}
   </tbody>
+</script>
+
+<script type="text/x-handlebars-template" id="summaryTemplate">
+  <h3>Summary!</h3>
+  <p>All active: <span class="red">{{activeFields}}</span><span class="normal"> fields</span></p>
+  <p>Longest route found: <span class="red">{{longestWay}}</span><span class="normal"> fields</span></p>
+  <p>Shortest route: <span class="green">{{shortestWay}}</span><span class="normal"> fields</span></p>
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>

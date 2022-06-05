@@ -23,6 +23,8 @@ class Pathfinder {
     thisPathfinder.dom.table = thisPathfinder.dom.wrapper.querySelector(select.pathfinder.array);
     thisPathfinder.dom.button = thisPathfinder.dom.wrapper.querySelector(select.pathfinder.button);
     thisPathfinder.dom.alert = thisPathfinder.dom.wrapper.querySelector(select.pathfinder.alert);
+    thisPathfinder.dom.popup = document.getElementById(select.pathfinder.popupBackground);
+    thisPathfinder.dom.popupMsg = thisPathfinder.dom.popup.querySelector(select.pathfinder.popupMessageContainer);
   }
 
   createArray() {
@@ -217,10 +219,12 @@ class Pathfinder {
     };
 
     move([], thisPathfinder.start[0], thisPathfinder.start[1]);
-    console.log('posible: ', possiblePaths);
+    //console.log('posible: ', possiblePaths);
     thisPathfinder.optimalPath = possiblePaths.reduce((path1, path2) => path1.length < path2.length ? path1 : path2);
-    console.log('optimal: ', thisPathfinder.optimalPath);
+    //console.log('optimal: ', thisPathfinder.optimalPath);
+    thisPathfinder.longestPath = possiblePaths.reduce((path1, path2) => path1.length > path2.length ? path1 : path2);
     thisPathfinder.colorOptimalPath();
+    thisPathfinder.callSummaryPopUp();
   };
 
   colorOptimalPath() {
@@ -287,6 +291,21 @@ class Pathfinder {
     }
   };
 
+  calcStatistics() {
+    const thisPathfinder = this;
+
+    const activeFields = thisPathfinder.array.flat(2).reduce((prev, next) => {
+      return prev + (next > 0 ? 1 : 0);
+    }, 0);
+
+    thisPathfinder.summary = {
+      activeFields: activeFields,
+      shortestWay: thisPathfinder.optimalPath.length,
+      longestWay: thisPathfinder.longestPath.length
+    };
+
+  };
+
   callAlert(msg) {
     const thisPathfinder = this;
 
@@ -295,7 +314,20 @@ class Pathfinder {
     setTimeout(function() {
       thisPathfinder.dom.alert.style.opacity = '0';
     }, settings.alertDuration);
-  }
+  };
+
+  callSummaryPopUp() {
+    const thisPathfinder = this;
+
+    thisPathfinder.calcStatistics();
+    const templateMsgRaw = document.getElementById(select.template.summary).innerHTML;
+    const templateMsg = Handlebars.compile(templateMsgRaw);
+    thisPathfinder.dom.popupMsg.innerHTML = templateMsg(thisPathfinder.summary);
+    thisPathfinder.dom.popup.classList.add(classNames.popup.active);
+    thisPathfinder.dom.popup.querySelector('.close-btn').addEventListener('click', () => {
+      thisPathfinder.dom.popup.classList.remove(classNames.popup.active);
+    });
+  };
 }
 
 export default Pathfinder;

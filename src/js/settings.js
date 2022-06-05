@@ -1,6 +1,7 @@
 export const select = {
   template: {
-    tableId: 'tableTemplate'
+    tableId: 'tableTemplate',
+    summary: 'summaryTemplate'
   },
   containerOf: {
     pagesId: 'pages',
@@ -11,7 +12,9 @@ export const select = {
     title: '.title h4',
     array: 'table',
     button: 'button',
-    alert: '.alert-box'
+    alert: '.alert-box',
+    popupBackground: 'summary-background',
+    popupMessageContainer: '.info-box'
   },
   nav: {
     links: 'nav a'
@@ -32,6 +35,9 @@ export const classNames = {
     optimal: 'optimal',
     selectedNeighbour: 'neighbour',
     alertActive: 'active'
+  },
+  popup: {
+    'active': 'active'
   }
 };
 
