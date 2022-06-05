@@ -4,7 +4,6 @@
   color: white;
 
   .pathfinder-wrapper {
-    //border: solid 1px red;
     height: 600px;
   }
 
@@ -53,13 +52,13 @@
     left: 100%;
     transform: translate(-100%);
     padding: 5px;
-    color: black;
+    color: $main-dark-color;
     cursor: pointer;
     display: inline-block;
   }
 
   .info-box {
-    color: black;
+    color: $main-dark-color;
     text-align: center;
     font-weight: bold;
     text-transform: uppercase;
@@ -68,12 +67,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    .red {
-      color: #C24E00;
+    .negative {
+      color: $font-negative;
     }
 
-    .green {
-      color: green;
+    .positive {
+      color: $font-positive;
     }
 
     .normal {
@@ -156,11 +155,44 @@
 }
 
 @media screen and (max-width: 720px) {
+  #pathfinder {
+    .pathfinder-wrapper {
+      height: 500px;
+    }
+
+    #summary-popup {
+      width: 80vw;
+    }
+
+    table {
+      td {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+
   p {
     font-size: x-small;
   }
+
   h3 {
     font-size: small;
     margin: 3px;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  #pathfinder {
+    .pathfinder-wrapper {
+      height: 400px;
+    }
+
+    table {
+      td {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 }
