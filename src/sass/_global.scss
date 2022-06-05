@@ -5,10 +5,12 @@ body {
   margin: 0;
   font-family: $main-font;
   box-sizing: border-box;
+  min-width: 340px;
 }
 
 #upper-wrapper {
   max-width: 1920px;
+  min-width: 340px;
   min-height: 625px;
   height: 100vh;
   background-image: url('../images/background.jpg');
@@ -29,6 +31,7 @@ body {
 
 #lower-wrapper {
   max-width: 1920px;
+  min-width: 340px;
   position: absolute;
   top: -300px;
 }
@@ -48,10 +51,18 @@ body {
   .ghost-bar {
     height: 100px;
   }
+
+  #upper-wrapper {
+    min-height: 525px;
+  }
 }
 
 @media screen and (max-width: 720px) {
   .ghost-bar {
     height: 50px;
+  }
+
+  #upper-wrapper {
+    min-height: 425px;
   }
 }

@@ -96,7 +96,6 @@ class Pathfinder {
           event.target.classList.remove(classNames.finderArray.selected);
         } else {
           //console.log('non match');
-          //  TO DO silent alert
           thisPathfinder.callAlert('Brakes in path ar not allowed!');
         }
       }
@@ -285,10 +284,9 @@ class Pathfinder {
       const rowDom = thisPathfinder.dom.table.querySelector('[data-row="' + r + '"]');
       const cellDom = rowDom.querySelector('[data-col="' + c + '"]');
       cellDom.classList.add(classNames.finderArray.selectedNeighbour);
-
-      // reset neighbours
-      thisPathfinder.selectionNeighbours = neighbours;
     }
+    // reset neighbours
+    thisPathfinder.selectionNeighbours = neighbours;
   };
 
   calcStatistics() {
