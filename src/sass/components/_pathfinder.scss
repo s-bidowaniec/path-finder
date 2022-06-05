@@ -8,6 +8,20 @@
     height: 600px;
   }
 
+  .alert-box {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -200%);
+    background-color: $selection-color;
+    border: solid 3px $second-light-color;
+    padding: 10px;
+    border-radius: 5px;
+    opacity: 0;
+    transition-duration: 700ms;
+    transition-property: opacity;
+  }
+
+
   .title {
     position: absolute;
     left: 50%;
@@ -55,6 +69,16 @@
       &.optimal {
         background: $optimal-route;
       }
+
+      &.neighbour {
+        background: $selection-neighbour;
+        opacity: 0.25;
+
+        &:hover {
+          background: $selection-color;
+          opacity: 0.8;
+        }
+      }
     }
   }
 
@@ -70,6 +94,4 @@
     font-weight: bold;
     cursor: pointer;
   }
-
-
 }

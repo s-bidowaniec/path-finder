@@ -10,7 +10,8 @@ export const select = {
   pathfinder: {
     title: '.title h4',
     array: 'table',
-    button: 'button'
+    button: 'button',
+    alert: '.alert-box'
   },
   nav: {
     links: 'nav a'
@@ -28,7 +29,9 @@ export const classNames = {
     selected: 'selected',
     start: 'start',
     end: 'end',
-    optimal: 'optimal'
+    optimal: 'optimal',
+    selectedNeighbour: 'neighbour',
+    alertActive: 'active'
   }
 };
 
@@ -38,4 +41,9 @@ export const states = {
     startEnd: 'start_end',
     path: 'path'
   }
+};
+
+export const settings = {
+  moves: [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, 1], [1, 1], [1, -1], [-1, -1]],
+  alertDuration: 1200
 };

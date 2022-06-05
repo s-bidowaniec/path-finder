@@ -1,9 +1,10 @@
-import { select, classNames, states } from '../settings.js';
+import { select, classNames, states, settings } from '../settings.js';
 
 class Pathfinder {
   constructor() {
     const thisPathfinder = this;
     thisPathfinder.array = [];
+    thisPathfinder.selectionNeighbours = new Set();
     thisPathfinder.start = false;
     thisPathfinder.end = false;
     thisPathfinder.state = states.pathfinder.draw;
@@ -21,6 +22,7 @@ class Pathfinder {
     thisPathfinder.dom.title = thisPathfinder.dom.wrapper.querySelector(select.pathfinder.title);
     thisPathfinder.dom.table = thisPathfinder.dom.wrapper.querySelector(select.pathfinder.array);
     thisPathfinder.dom.button = thisPathfinder.dom.wrapper.querySelector(select.pathfinder.button);
+    thisPathfinder.dom.alert = thisPathfinder.dom.wrapper.querySelector(select.pathfinder.alert);
   }
 
   createArray() {
@@ -47,6 +49,7 @@ class Pathfinder {
 
     thisPathfinder.dom.table.addEventListener('click', function(event) {
       thisPathfinder.cellProcessing(event);
+      thisPathfinder.colorNeighbours();
     });
     thisPathfinder.dom.button.addEventListener('click', function() {
       thisPathfinder.buttonAction();
@@ -70,11 +73,19 @@ class Pathfinder {
         event.target.classList.add(classNames.finderArray.selected);
       } else {
         // continue line
-        const neighbours = Number(col < 9 ? thisPathfinder.array[row][col + 1] > 0 : 0) +
-          Number(col > 0 ? thisPathfinder.array[row][col - 1] > 0 : 0) +
-          Number(row < 9 ? thisPathfinder.array[row + 1][col] > 0 : 0) +
-          Number(row > 0 ? thisPathfinder.array[row - 1][col] > 0 : 0);
-        console.log('neighbours: ', neighbours);
+
+        //count active neighbours
+        let neighbours = 0;
+        let rowN;
+        let colN;
+        for (let move of settings.moves) {
+          rowN = row + move[0];
+          colN = col + move[1];
+          if (colN >= 0 && colN <= 9 && rowN >= 0 && rowN <= 9) {
+            neighbours += thisPathfinder.array[rowN][colN];
+          }
+        }
+        //console.log('neighbours: ', neighbours);
         if (neighbours > 0 && thisPathfinder.array[row][col] === 0) {
           thisPathfinder.array[row][col] = 1;
           event.target.classList.add(classNames.finderArray.selected);
@@ -82,8 +93,9 @@ class Pathfinder {
           thisPathfinder.array[row][col] = 0;
           event.target.classList.remove(classNames.finderArray.selected);
         } else {
-          console.log('non match');
+          //console.log('non match');
           //  TO DO silent alert
+          thisPathfinder.callAlert('Brakes in path ar not allowed!');
         }
       }
     }
@@ -107,6 +119,8 @@ class Pathfinder {
         thisPathfinder.array[row][col] = 1;
         event.target.classList.replace(classNames.finderArray.end, classNames.finderArray.selected);
         thisPathfinder.end = false;
+      } else {
+        thisPathfinder.callAlert('Select point within the path!');
       }
       if (!thisPathfinder.start) {
         thisPathfinder.dom.title.innerHTML = 'SELECT START POINT';
@@ -121,14 +135,15 @@ class Pathfinder {
   buttonAction() {
     const thisPathfinder = this;
 
-    console.log('button');
+    //console.log('button');
     if (thisPathfinder.state === states.pathfinder.draw) {
       if (thisPathfinder.array.reduce((sum, row) => sum + row.reduce((cell1, cell2) => cell1 + cell2), 0) > 1) {
         thisPathfinder.state = states.pathfinder.startEnd;
         thisPathfinder.dom.button.innerHTML = 'COMPUTE';
         thisPathfinder.dom.title.innerHTML = 'SELECT START POINT';
       } else {
-        console.log('no path');
+        //console.log('no path');
+        thisPathfinder.callAlert('Please draw the path first');
       }
     } else if (thisPathfinder.state === states.pathfinder.startEnd) {
       // TO DO if start and end point selected
@@ -138,15 +153,19 @@ class Pathfinder {
         thisPathfinder.dom.button.innerHTML = 'START AGAIN';
         thisPathfinder.dom.title.innerHTML = 'THE BEST ROUTE IS...';
       } else if (thisPathfinder.start) {
-        console.log('there is no end');
+        //console.log('there is no end');
+        thisPathfinder.callAlert('Select end point!');
       } else if (thisPathfinder.end) {
-        console.log('there is no start');
+        //console.log('there is no start');
+        thisPathfinder.callAlert('Select start point!');
       } else {
-        console.log('there is nothing');
+        //console.log('there is nothing');
+        thisPathfinder.callAlert('Select start and end point!');
       }
       // else print message draw paths
     } else if (thisPathfinder.state === states.pathfinder.path) {
       thisPathfinder.createArray();
+      thisPathfinder.selectionNeighbours = new Set();
       thisPathfinder.start = false;
       thisPathfinder.end = false;
       thisPathfinder.state = states.pathfinder.draw;
@@ -159,7 +178,7 @@ class Pathfinder {
     const thisPathfinder = this;
 
     const possiblePaths = [];
-    const directions = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, 1], [1, 1], [1, -1], [1, 1]];
+    const directions = settings.moves;
     let currentLength = false;
     // distance + 1 because path include start and end point (distance of one cell = two cells path)
     const distance = Math.abs(thisPathfinder.start[0] - thisPathfinder.end[0]) + Math.abs(thisPathfinder.start[1] - thisPathfinder.end[1]) + 1;
@@ -217,6 +236,66 @@ class Pathfinder {
     }
   };
 
+  colorNeighbours() {
+    const thisPathfinder = this;
+
+    console.log(thisPathfinder);
+    //  find neighbours
+    let neighbours = new Set();
+    for (let row in thisPathfinder.array) {
+      for (let column in thisPathfinder.array[row]) {
+        row = parseInt(row);
+        column = parseInt(column);
+        if (thisPathfinder.array[row][column]) {
+          let rowN;
+          let colN;
+          for (let move of settings.moves) {
+            rowN = row + move[0];
+            colN = column + move[1];
+            if (colN >= 0 && colN <= 9 && rowN >= 0 && rowN <= 9) {
+              if (!thisPathfinder.array[rowN][colN]) {
+                neighbours.add(JSON.stringify({ r: rowN, c: colN }));
+              }
+            }
+          }
+        }
+      }
+    }
+    //  old neighbours remove class
+    //console.log(neighbours);
+    const oldNeighbours = [...thisPathfinder.selectionNeighbours].filter(x => !neighbours.has(x));
+    for (let position of oldNeighbours) {
+      position = JSON.parse(position);
+      const r = String(position.r);
+      const c = String(position.c);
+      const rowDom = thisPathfinder.dom.table.querySelector('[data-row="' + r + '"]');
+      const cellDom = rowDom.querySelector('[data-col="' + c + '"]');
+      cellDom.classList.remove(classNames.finderArray.selectedNeighbour);
+    }
+    //  new neighbours add class
+    const newNeighbours = [...neighbours].filter(x => !thisPathfinder.selectionNeighbours.has(x));
+    for (let position of newNeighbours) {
+      position = JSON.parse(position);
+      const r = String(position.r);
+      const c = String(position.c);
+      const rowDom = thisPathfinder.dom.table.querySelector('[data-row="' + r + '"]');
+      const cellDom = rowDom.querySelector('[data-col="' + c + '"]');
+      cellDom.classList.add(classNames.finderArray.selectedNeighbour);
+
+      // reset neighbours
+      thisPathfinder.selectionNeighbours = neighbours;
+    }
+  };
+
+  callAlert(msg) {
+    const thisPathfinder = this;
+
+    thisPathfinder.dom.alert.innerHTML = msg;
+    thisPathfinder.dom.alert.style.opacity = '1';
+    setTimeout(function() {
+      thisPathfinder.dom.alert.style.opacity = '0';
+    }, settings.alertDuration);
+  }
 }
 
 export default Pathfinder;
