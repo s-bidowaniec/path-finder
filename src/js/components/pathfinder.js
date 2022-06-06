@@ -30,17 +30,12 @@ class Pathfinder {
   createArray() {
     const thisPathfinder = this;
 
-    thisPathfinder.array = [
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+    for (let r = 0; r < settings.rowsCount; r++) {
+      thisPathfinder.array.push([]);
+      for (let c = 0; c < settings.columnsCount; c++) {
+        thisPathfinder.array[thisPathfinder.array.length - 1].push(0);
+      }
+    }
     const templateRaw = document.getElementById(select.template.tableId).innerHTML;
     const tableTemplate = Handlebars.compile(templateRaw);
     thisPathfinder.dom.table.innerHTML = tableTemplate({ array: thisPathfinder.array });
@@ -96,7 +91,7 @@ class Pathfinder {
           event.target.classList.remove(classNames.finderArray.selected);
         } else {
           //console.log('non match');
-          thisPathfinder.callAlert('Brakes in path ar not allowed!');
+          thisPathfinder.callAlert('Holes in path are not allowed.');
         }
       }
     }
@@ -121,7 +116,7 @@ class Pathfinder {
         event.target.classList.replace(classNames.finderArray.end, classNames.finderArray.selected);
         thisPathfinder.end = false;
       } else {
-        thisPathfinder.callAlert('Select point within the path!');
+        thisPathfinder.callAlert('Select point within the path.');
       }
       if (!thisPathfinder.start) {
         thisPathfinder.dom.title.innerHTML = 'SELECT START POINT';
@@ -144,7 +139,7 @@ class Pathfinder {
         thisPathfinder.dom.title.innerHTML = 'SELECT START POINT';
       } else {
         //console.log('no path');
-        thisPathfinder.callAlert('Please draw the path first');
+        thisPathfinder.callAlert('Please draw the path first.');
       }
     } else if (thisPathfinder.state === states.pathfinder.startEnd) {
       // TO DO if start and end point selected
@@ -155,13 +150,13 @@ class Pathfinder {
         thisPathfinder.dom.title.innerHTML = 'THE BEST ROUTE IS...';
       } else if (thisPathfinder.start) {
         //console.log('there is no end');
-        thisPathfinder.callAlert('Select end point!');
+        thisPathfinder.callAlert('Select end point.');
       } else if (thisPathfinder.end) {
         //console.log('there is no start');
-        thisPathfinder.callAlert('Select start point!');
+        thisPathfinder.callAlert('Select start point.');
       } else {
         //console.log('there is nothing');
-        thisPathfinder.callAlert('Select start and end point!');
+        thisPathfinder.callAlert('Select start and end point.');
       }
       // else print message draw paths
     } else if (thisPathfinder.state === states.pathfinder.path) {
@@ -182,7 +177,12 @@ class Pathfinder {
     const directions = settings.moves;
     let currentLength = false;
     // distance + 1 because path include start and end point (distance of one cell = two cells path)
-    const distance = Math.abs(thisPathfinder.start[0] - thisPathfinder.end[0]) + Math.abs(thisPathfinder.start[1] - thisPathfinder.end[1]) + 1;
+    let distance = 999;
+    if (settings.moves.length === 4) {
+      distance = Math.abs(thisPathfinder.start[0] - thisPathfinder.end[0]) + Math.abs(thisPathfinder.start[1] - thisPathfinder.end[1]) + 1;
+    } else if (settings.moves.length === 8) {
+      distance = (Math.abs(thisPathfinder.start[0] - thisPathfinder.end[0]) + Math.abs(thisPathfinder.start[1] - thisPathfinder.end[1])) / 2 + 1;
+    }
     const move = (positions, row, column) => {
       positions.push({ r: row, c: column });
       // if current position reach end value add positions to possible paths (only if its shorter then previous ones

@@ -51,5 +51,7 @@ export const states = {
 
 export const settings = {
   moves: [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, 1], [1, 1], [1, -1], [-1, -1]],
-  alertDuration: 1200
+  alertDuration: 1200,
+  rowsCount: 10,
+  columnsCount: 10
 };
