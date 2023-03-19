@@ -29,7 +29,7 @@ class Pathfinder {
 
   createArray() {
     const thisPathfinder = this;
-
+    thisPathfinder.array = [];
     for (let r = 0; r < settings.rowsCount; r++) {
       thisPathfinder.array.push([]);
       for (let c = 0; c < settings.columnsCount; c++) {
@@ -142,7 +142,7 @@ class Pathfinder {
         thisPathfinder.callAlert('Please draw the path first.');
       }
     } else if (thisPathfinder.state === states.pathfinder.startEnd) {
-      // TO DO if start and end point selected
+      // if start and end point selected
       if (thisPathfinder.start && thisPathfinder.end) {
         thisPathfinder.computePath();
         thisPathfinder.state = states.pathfinder.path;
